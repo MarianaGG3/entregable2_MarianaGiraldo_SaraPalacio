@@ -1,6 +1,11 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import pydicom
+import matplotlib.pyplot as plt
+import os
+from pydicom.data import get_testdata_file
+from pydicom import dcmread
 
 ima= cv2.imread('Imagen.jpg')
 ima=cv2.cvtColor(ima, cv2.COLOR_BGR2RGB)
@@ -18,3 +23,15 @@ print(f'El número de células que se encuentran en la imagen es de:{elem-1}')
 
 plt.imshow(mask)
 plt.show()
+# punto 2
+archivo = 'archivosDCM'
+arch_dicom=[]
+print(os.listdir(archivo))
+for n in os.listdir(archivo):
+    if n.endswith('.dcm'):  
+       lectura = os.path.join(archivo, n)
+       dcm = pydicom.dcmread(lectura)
+       arch_dicom.append(dcm)
+       im = dcm.pixel_array
+       plt.imshow(im)
+       plt.show()
